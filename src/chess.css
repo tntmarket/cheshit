@@ -1,0 +1,44 @@
+.piece {
+   height: 50px;
+   font-size: 55px;
+   line-height: 52px;
+   position: absolute;
+}
+
+.piece-K:before {
+   content: "\2654"
+}
+.piece-Q:before {
+   content: "\2655"
+}
+.piece-R:before {
+   content: "\2656"
+}
+.piece-B:before {
+   content: "\2657"
+}
+.piece-N:before {
+   content: "\2658"
+}
+.piece-P:before {
+   content: "\2659"
+}
+
+.piece-k:before {
+   content: "\265A"
+}
+.piece-q:before {
+   content: "\265B"
+}
+.piece-r:before {
+   content: "\265C"
+}
+.piece-b:before {
+   content: "\265D"
+}
+.piece-n:before {
+   content: "\265E"
+}
+.piece-p:before {
+   content: "\265F"
+}

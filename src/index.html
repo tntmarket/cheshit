@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="cheshit">
+<head>
+   <meta charset="utf-8">
+   <title></title>
+   <link rel="stylesheet" href="lib/boot/css/bootstrap.min.css">
+   <link rel="stylesheet" href="lib/boot/css/bootstrap-theme.min.css">
+   <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="chess.css">
+
+   <script src="https://cdn.firebase.com/v0/firebase.js"></script>
+   <script src="lib/jquery.min.js"></script>
+   <script src="lib/boot/js/bootstrap.min.js"></script>
+   <script src="lib/angular.min.js"></script>
+   <script src="lib/lvl-drag-drop.js"></script>
+   <script src="lib/angularfire.min.js"></script>
+   <script src="app.js"></script>
+</head>
+
+<body ng-controller="Chess">
+   <div class="board">
+      <div class="row" ng-repeat="row in game.board">
+         <div class="cell" ng-repeat="piece in row">
+            <div class="piece piece-{{piece}}" 
+               ng-show="piece != ' '"></div>
+         </div>
+      </div>
+   </div>
+</body>
+
+</html>
