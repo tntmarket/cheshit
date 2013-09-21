@@ -1,0 +1,12 @@
+{
+  "name": "cheshit",
+  "version": "0.0.0",
+  "authors": [
+    "tntmarker",
+    "buyinganame"
+  ],
+  "repository": "https://github.com/tntmarket/cheshit",
+  "dependencies": {
+    "express": "~3.0.0"
+  }
+}
