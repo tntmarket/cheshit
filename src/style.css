@@ -19,7 +19,7 @@ body {
    height:50px;
 }
 
-.cell {
+.square {
    display: inline-block;
    margin: 0px;
    padding: 0px;
@@ -27,7 +27,7 @@ body {
    height:50px;
 }
 
-.board .row:nth-child(even) .cell:nth-child(odd),
-.board .row:nth-child(odd) .cell:nth-child(even) {
+.board .row:nth-child(even) .square:nth-child(odd),
+.board .row:nth-child(odd) .square:nth-child(even) {
    background: #ccc;
 }
