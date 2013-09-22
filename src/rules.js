@@ -1,7 +1,7 @@
 //white on top, black bottom
 
-boardA = {
-   squares: [
+gameA = {
+   board: [
       [ 'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r' ],
       [ 'p', ' ', 'p', 'p', 'p', 'p', 'p', 'p' ],
       [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ],
@@ -15,8 +15,8 @@ boardA = {
 };
 
 //white on top, black bottom
-boardB = {
-   squares: [
+gameB = {
+   board: [
       [ 'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r' ],
       [ 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' ],
       [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ],
@@ -29,36 +29,38 @@ boardB = {
    backup: [ 'P', 'P', 'R' ]
 };
 
-function Board(squares) {
-   this.squares = squares;
+function Board(board) {
+   this.board = board;
 }
 
 Board.prototype = {
    pieceAt: function(position, newPiece) {
       if(newPiece) {
-         this.squares[position[0]][position[1]] = newPiece;
+         this.board[position[0]][position[1]] = newPiece;
          return;
       }
-      return this.squares[position[0]][position[1]];
+      return this.board[position[0]][position[1]];
    },
    clear: function(position) {
-      this.squares[position[0]][position[1]] = ' ';
+      this.board[position[0]][position[1]] = ' ';
    },
    at: function(row, file) {
-      return this.squares[row][file];
+      return this.board[row][file];
    }
 }
 
 
-function notCheck(oldPos, newPos, board ) {
-   var type = board.squares.pieceAt(oldPos);
+function notCheck(oldPos, newPos, game ) {
+   var board = new Board(game.board);
 
-   if(type == type.toUpperCase()){
+   var type = board.pieceAt(oldPos);
+
+   if(type == type.toUpperCase()) {
       for (var i = 0; i < 8; i++) {
-         for(var j =0; j < 8; j++){
-            if(board.squares[i][j] != ' ' &&
-               board.squares[i][j] == board.squares[i][j].toLowerCase &&
-               makeMove([i,j], newPos, board)){
+         for(var j =0; j < 8; j++) {
+            if(board.at([i][j] != ' ' &&
+               board.at(i,j) == board.at(i,j).toLowerCase &&
+               makeMove([i,j], newPos, game)) ) {
                return false;
             }
          }
@@ -69,8 +71,8 @@ function notCheck(oldPos, newPos, board ) {
    else if(type == type.toLowerCase()){
       for (var i = 0; i < 8; i++) {
          for(var j =0; j < 8; j++){
-            if(board.squares[i][j] != ' ' &&
-               board.squares[i][j] == board.squares[i][j].toUpperCase &&
+            if(board.board.at(i,j) != ' ' &&
+               board.board.at(i,j) == board.board.at(i,j).toUpperCase &&
                makeMove([i,j], newPos, board)){
                return false;
             }
@@ -92,25 +94,26 @@ function notSameType(type1, type2){
    }
 }
 
-function makeMove(oldPos, newPos, board ) {
-   var squares = new Board(board.squares);
+function makeMove(oldPos, newPos, game ) {
+   var board = new Board(game.board);
 
-   var type = squares.pieceAt(oldPos);
-   var newType = squares.pieceAt(newPos);
+   var type = board.pieceAt(oldPos);
+   var newType = board.pieceAt(newPos);
 
-   var backup = board.backup;
+   var backup = game.backup;
+
    switch (type){
       case 'p':
-         if (squares[newPos[0]] [newPos[1]] === ' ') {
+         if (board.pieceAt(newPos) === ' ') {
             if (oldPos[0] === 1 && (newPos[0]=== oldPos[0]+2) && (newPos[1] === oldPos[1])) {
-               squares.clear(oldPos);
-               squares.pieceAt(newPos, type);
+               board.clear(oldPos);
+               board.pieceAt(newPos, type);
 
                return true;
             }
             else if ((newPos[0]=== oldPos[0]+1) && (newPos[1] === oldPos[1])) {
-               squares.clear(oldPos);
-               squares.pieceAt(newPos, type);
+               board.clear(oldPos);
+               board.pieceAt(newPos, type);
 
                return true;
             }
@@ -120,15 +123,15 @@ function makeMove(oldPos, newPos, board ) {
          }
          else if( (newPos[0]=== (oldPos[0] +1)) && (newPos[1]=== (oldPos[1]+1)) && notSameType(type,newType)){
 
-            backup.push(squares.pieceAt(newPos));
-            squares.clear(oldPos);
-            squares.pieceAt(newPos, type);
+            backup.push(board.pieceAt(newPos));
+            board.clear(oldPos);
+            board.pieceAt(newPos, type);
             return true;
          }
          else if( (newPos[0]=== (oldPos[0] +1)) && (newPos[1]=== (oldPos[1]-1)) && notSameType(type,newType)){
-            backup.push(squares.pieceAt(newPos));
-            squares.clear(oldPos);
-            squares.pieceAt(newPos, type);
+            backup.push(board.pieceAt(newPos));
+            board.clear(oldPos);
+            board.pieceAt(newPos, type);
             return true;
          }
          else return false;
@@ -136,17 +139,17 @@ function makeMove(oldPos, newPos, board ) {
 
 
       case 'P':
-         if (squares[newPos[0]] [newPos[1]] === ' ') {
+         if (board.pieceAt(newPos) === ' ') {
             if (oldPos[0] === 6 && (newPos[0]=== oldPos[0]-2) && (newPos[1] === oldPos[1])) {
-               squares.clear(oldPos);
-               squares.pieceAt(newPos, type);
+               board.clear(oldPos);
+               board.pieceAt(newPos, type);
 
                return true;
             }
 
             else if ((newPos[0]=== oldPos[0]-1) && (newPos[1] === oldPos[1])) {
-               squares.clear(oldPos);
-               squares.pieceAt(newPos, type);
+               board.clear(oldPos);
+               board.pieceAt(newPos, type);
 
                return true;
             }
@@ -155,15 +158,15 @@ function makeMove(oldPos, newPos, board ) {
             }
          }
          else if( (newPos[0]=== (oldPos[0] -1)) && (newPos[1]=== (oldPos[1]-1)) && notSameType(type,newType)){
-            backup.push(squares.pieceAt(newPos));
-            squares.clear(oldPos);
-            squares.pieceAt(newPos, type);
+            backup.push(board.pieceAt(newPos));
+            board.clear(oldPos);
+            board.pieceAt(newPos, type);
             return true;
          }
          else if( (newPos[0]=== (oldPos[0] -1)) && (newPos[1]=== (oldPos[1]+1)) && notSameType(type,newType)){
-            backup.push(squares.pieceAt(newPos));
-            squares.clear(oldPos);
-            squares.pieceAt(newPos, type);
+            backup.push(board.pieceAt(newPos));
+            board.clear(oldPos);
+            board.pieceAt(newPos, type);
             return true;
          }
          else return false;
@@ -176,23 +179,23 @@ function makeMove(oldPos, newPos, board ) {
             if(newPos[1]> oldPos[1]){
                //check if something in between
                for (var i = oldPos[1] +1; i< newPos[1]; i++) {
-                  if(squares[oldPos[0]][i] != ' '){
+                  if(board.at(oldPos[0],i) != ' '){
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
@@ -202,23 +205,23 @@ function makeMove(oldPos, newPos, board ) {
             else{
 
                for (var i = newPos[1] +1; i< oldPos[1]; i++) {
-                  if(squares[oldPos[0]][i] != ' '){
+                  if(board.at(oldPos[0],i) != ' '){
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
@@ -234,23 +237,23 @@ function makeMove(oldPos, newPos, board ) {
             if(newPos[0]> oldPos[0]) {
                //check if something in between
                for (var i = oldPos[0] +1; i< newPos[0]; i++) {
-                  if(squares[i][oldPos[1]] != ' ') {
+                  if(board.at(i, oldPos[1]) != ' ') {
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
@@ -259,23 +262,23 @@ function makeMove(oldPos, newPos, board ) {
             else {
 
                for (var i = newPos[0] +1; i< oldPos[0]; i++) {
-                  if(squares[i][oldPos[1]] != ' '){
+                  if(board.at(i, oldPos[1]) != ' '){
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
@@ -299,17 +302,17 @@ function makeMove(oldPos, newPos, board ) {
             ((newPos[0]===oldPos[0] - 1) &&(newPos[1]===oldPos[1] + 2)) || ((newPos[0]===oldPos[0] - 1) &&(newPos[1]===oldPos[1] - 2))){
 
 
-            if (squares.pieceAt(newPos) === ' ') {
-               squares.clear(oldPos);
-               squares.pieceAt(newPos, type);
+            if (board.pieceAt(newPos) === ' ') {
+               board.clear(oldPos);
+               board.pieceAt(newPos, type);
 
                return true;
             }
             //capturing a piece
             else if(notSameType(type,newType)){
-               backup.push(squares.pieceAt(newPos));
-               squares.clear(oldPos);
-               squares.pieceAt(newPos, type);
+               backup.push(board.pieceAt(newPos));
+               board.clear(oldPos);
+               board.pieceAt(newPos, type);
                return true;
             }
 
@@ -328,24 +331,24 @@ function makeMove(oldPos, newPos, board ) {
          if (Math.abs(newPos[0] - oldPos[0]) === Math.abs(newPos[1] - oldPos[1])) {
             if((newPos[0] > oldPos[0]) && (newPos[1] > oldPos[1])){
                for (var i = oldPos[0] + 1; i < newPos; i++) {
-                  if (squares[i][i]!= ' ') {
+                  if (board.at(i,i)!= ' ') {
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
 
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
                   return true;
                }
                else return false;
@@ -353,24 +356,24 @@ function makeMove(oldPos, newPos, board ) {
 
             if((newPos[0] < oldPos[0]) && (newPos[1] < oldPos[1])){
                for (var i = newPos[0] + 1; i < oldPos; i++) {
-                  if (squares[i][i]!= ' ') {
+                  if (board.at(i,i)!= ' ') {
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
 
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
                   return true;
                }
                else return false;
@@ -378,24 +381,24 @@ function makeMove(oldPos, newPos, board ) {
 
             if((newPos[0] < oldPos[0]) && (newPos[1] > oldPos[1])){
                for (var i = 1; i + newPos[0] < oldPos[0]; i++) {
-                  if (squares[newPos[0]+i][newPos[1]-i]!= ' ') {
+                  if (board.at(newPos[0]+i,newPos[1]-i)!= ' ') {
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
 
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
                   return true;
                }
 
@@ -404,24 +407,24 @@ function makeMove(oldPos, newPos, board ) {
 
             if((newPos[0] > oldPos[0]) && (newPos[1] < oldPos[1])){
                for (var i = 1; i + newPos[1] < oldPos[1]; i++) {
-                  if (squares[newPos[0]-i][newPos[1]+i]!= ' ') {
+                  if (board.at(newPos[0]-i,newPos[1]+i)!= ' ') {
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
 
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
                   return true;
                }
 
@@ -442,23 +445,23 @@ function makeMove(oldPos, newPos, board ) {
             if(newPos[1]> oldPos[1]){
                //check if something in between
                for (var i = oldPos[1] +1; i< newPos[1]; i++) {
-                  if(squares[oldPos[0]][i] != ' '){
+                  if(board.at(oldPos[0],i) != ' '){
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
@@ -470,23 +473,23 @@ function makeMove(oldPos, newPos, board ) {
 
             else {
                for (var i = newPos[1] +1; i< oldPos[1]; i++) {
-                  if(squares[oldPos[0]][i] != ' '){
+                  if(board.at(oldPos[0],i) != ' '){
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
                //capturing a piece
                else if (notSameType(type,newType)) {
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
@@ -502,23 +505,23 @@ function makeMove(oldPos, newPos, board ) {
             if(newPos[0]> oldPos[0]){
                //check if something in between
                for (var i = oldPos[0] +1; i< newPos[0]; i++) {
-                  if(squares[i][oldPos[1]] != ' '){
+                  if(board.at(i,oldPos[1]) != ' '){
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
                   return true;
                }
 
@@ -528,23 +531,23 @@ function makeMove(oldPos, newPos, board ) {
             }
             else {
                for (var i = newPos[0] +1; i< oldPos[0]; i++) {
-                  if(squares[i][oldPos[1]] != ' '){
+                  if(board.at(i,oldPos[1]) != ' '){
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
@@ -558,24 +561,24 @@ function makeMove(oldPos, newPos, board ) {
          else if (Math.abs(newPos[0] - oldPos[0]) === Math.abs(newPos[1] - oldPos[1])) {
             if((newPos[0] > oldPos[0]) && (newPos[1] > oldPos[1])) {
                for (var i = oldPos[0] + 1; i < newPos; i++) {
-                  if (squares[i][i]!= ' ') {
+                  if (board.at(i,i)!= ' ') {
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
 
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
                   return true;
                }
 
@@ -584,24 +587,24 @@ function makeMove(oldPos, newPos, board ) {
 
             if((newPos[0] < oldPos[0]) && (newPos[1] < oldPos[1])){
                for (var i = newPos[0] + 1; i < oldPos; i++) {
-                  if (squares[i][i]!= ' ') {
+                  if (board.at(i,i)!= ' ') {
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
 
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
                   return true;
                }
 
@@ -610,24 +613,24 @@ function makeMove(oldPos, newPos, board ) {
 
             if((newPos[0] < oldPos[0]) && (newPos[1] > oldPos[1])){
                for (var i = 1; i + newPos[0] < oldPos[0]; i++) {
-                  if (squares[newPos[0]+i][newPos[1]-i]!= ' ') {
+                  if (board.at(newPos[0]+i,newPos[1]-i) != ' ') {
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
 
                //capturing a piece
                else if(notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
                   return true;
                }
 
@@ -636,24 +639,24 @@ function makeMove(oldPos, newPos, board ) {
 
             if((newPos[0] > oldPos[0]) && (newPos[1] < oldPos[1])){
                for (var i = 1; i + newPos[1] < oldPos[1]; i++) {
-                  if (squares[newPos[0]-i][newPos[1]+i]!= ' ') {
+                  if (board.at(newPos[0]-i,newPos[1]+i)!= ' ') {
                      return false;
                   }
                }
 
                //moving to empty space
-               if (squares.pieceAt(newPos) === ' ') {
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+               if (board.pieceAt(newPos) === ' ') {
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
 
                   return true;
                }
 
                //capturing a piece
                else if (notSameType(type,newType)){
-                  backup.push(squares.pieceAt(newPos));
-                  squares.clear(oldPos);
-                  squares.pieceAt(newPos, type);
+                  backup.push(board.pieceAt(newPos));
+                  board.clear(oldPos);
+                  board.pieceAt(newPos, type);
                   return true;
                }
 
@@ -674,16 +677,16 @@ function makeMove(oldPos, newPos, board ) {
 
          if ((Math.abs(oldPos[0] - newPos[0]) <= 1) && (Math.abs(oldPos[1] - newPos[1]))) {
             //moving to an empty square where you cant get checked
-            if(squares.pieceAt(newPos) === ' ' && notCheck([oldPos[0], oldPos[1]],[newPos[0]][newPos[1]],board)) {
-               squares.clear(oldPos);
-               squares.pieceAt(newPos, type);
+            if(board.pieceAt(newPos) === ' ' && notCheck([oldPos[0], oldPos[1]],[newPos[0]][newPos[1]], game)) {
+               board.clear(oldPos);
+               board.pieceAt(newPos, type);
 
                return true;
             }
-            else if(notSameType(type,newType) && notCheck([oldPos[0], oldPos[1]],[newPos[0]][newPos[1]],board)) {
-               backup.push(squares.pieceAt(newPos));
-               squares.clear(oldPos);
-               squares.pieceAt(newPos, type);
+            else if(notSameType(type,newType) && notCheck([oldPos[0], oldPos[1]],[newPos[0]][newPos[1]], game)) {
+               backup.push(board.pieceAt(newPos));
+               board.clear(oldPos);
+               board.pieceAt(newPos, type);
                return true;
             }
             else return false;
