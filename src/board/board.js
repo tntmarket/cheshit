@@ -1,8 +1,9 @@
 (function() {
-   var module = angular.module('dragdrop', []);
+   var module = angular.module('board', []);
 
    module.service('hand', function() {
       this.from = null;
+      this.to = null;
 
       this.pickup = function(from) {
          if(this.from) {
@@ -12,70 +13,85 @@
          this.from = from; 
       };
 
-      this.putdown = function() {
-         var from = this.from;
+      this.updateTo = function(to) {
+         this.to = to;
+      };
+
+      this.clear = function() {
          this.from = null;
-
-         return from;
+         this.to = null;
       };
    });
    
-   module.directive('piece', function($rootScope) {
-      return {
-         restrict: 'E',
-         templateUrl: 'board/piece.html',
-         replace: true,
-         scope: {
-            type: '@'
-         },
-
-         link: function(scope, el, attrs, controller) {
-            $(el).draggable({
-               addClasses: false,
-               revert: false 
-            });
-         }
-      };
-   });
-   
-   module.directive('square', function($rootScope, hand) {
+   module.directive('square', function(hand) {
 
       return {
          restrict: 'E',
          templateUrl: 'board/square.html',
          replace: true,
          scope: {
-           row : '@',
-           file: '@',
-           piece: '@'
+           row : '=',
+           file: '=',
+           type: '='
          },
-         transclude: true,
 
          link: function(scope, el, attrs, controller) {
-            $(el).droppable({
+            $(el).find('.piece').draggable({
                addClasses: false,
-               tolerance: 'pointer',
-               out: function(event) {
+               revert: false,
+               start: function() {
                   hand.pickup([scope.row, scope.file]);
                },
-               drop: function(event) {
-                  var from = hand.putdown();
-                  var to = [scope.row, scope.file];
-
-                  if(!from || !to) {
-                     throw 'FUUUUK';
-                  }
+               stop: function() {
+                  var from = hand.from;
+                  var to = hand.to;
+                  hand.clear();
                   
-                  //console.log('drop: ' + from + ' -> ' + to); 
                   if(from[0] === to[0] && from[1] === to[1]) {
                      return;
                   }
 
                   scope.$emit('move', from, to);
+               }
+            });
+
+            $(el).droppable({
+               addClasses: false,
+               tolerance: 'pointer',
+               drop: function(event) {
                },
+               over: function() {
+                  hand.updateTo([scope.row, scope.file]);
+               }
             });
          }
       };
    });
+
+   module.directive('board', function() {
+
+      return {
+         restrict: 'E',
+         templateUrl: 'board/board.html',
+         replace: true,
+         scope: {},
+         controller: function($scope) {
+
+         },
+
+         link: function(scope, el, attrs, controller) {
+            $(el).droppable({
+               addClasses: false,
+               tolerance: 'pointer',
+               drop: function(event) {
+               },
+               over: function() {
+                  hand.updateTo([scope.row, scope.file]);
+               }
+            });
+         }
+      };
+   });
+
 
 })();

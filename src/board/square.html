@@ -2,5 +2,6 @@
    <span style="position:absolute;padding:3px;font-size:10px;">
       {{row}}{{file}}</span>
    
-   <piece type="{{piece}}"></piece>
+   <div class="piece piece-{{type}}"
+      ng-hide="type == ' '"></div>
 </div>
