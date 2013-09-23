@@ -1,15 +1,15 @@
 (function() {
-   var module = angular.module('board', []);
+   var Board = angular.module('board', []);
 
-   module.service('hand', function() {
+   Board.service('hand', function() {
       this.from = null;
 
       this.pickup = function(from) {
-         this.from = from; 
+         this.from = from;
       };
    });
-   
-   module.directive('board', function() {
+
+   Board.directive('board', function() {
 
       return {
          restrict: 'E',
@@ -68,7 +68,7 @@
          },
 
          link: function(scope, el, attrs, controller) {
-            
+
          }
       };
    });

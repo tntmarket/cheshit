@@ -1,24 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="cheshit">
+<html lang="en">
 <head>
+
    <meta charset="utf-8">
    <title></title>
-   <link rel="stylesheet" href="lib/boot/css/bootstrap.min.css">
-   <link rel="stylesheet" href="lib/boot/css/bootstrap-theme.min.css">
+   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
    <link rel="stylesheet" href="style.css">
    <link rel="stylesheet" href="chess.css">
 
    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
-   <script src="lib/jquery.min.js"></script>
-   <!--<script src="lib/jquery-ui.min.js"></script>-->
-   <script src="lib/boot/js/bootstrap.min.js"></script>
-   <script src="lib/angular.min.js"></script>
+   <script src="lib/jquery/jquery.js"></script>
+   <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
+
+   <script src="lib/angular-latest/build/angular.js"></script>
+   <script src="lib/angular-fire/angularFire.js"></script>
+
    <script src="board/board.js"></script>
-   <script src="lib/angularfire.min.js"></script>
    <script src="app.js"></script>
+
 </head>
 
-<body ng-controller="Chess">
+<body ng-controller="Chess" ng-app="cheshit">
    <board squares="board" player="{{player}}"></board>
 </body>
 

@@ -1,0 +1,24 @@
+{
+  "name": "cheshit",
+  "version": "0.0.0",
+  "authors": [
+    "tntmarket",
+    "buyinganame"
+  ],
+  "repository": "https://github.com/tntmarket/cheshit",
+  "description": "Cray cray chess",
+  "main": "src/index.html",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "*",
+    "angular-latest": "*",
+    "jQuery": "*",
+    "angular-fire": "*"
+  }
+}

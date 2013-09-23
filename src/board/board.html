@@ -1,6 +1,6 @@
 <div class="board">
    <div class="row" ng-repeat="row in squares">
-      <div ng-repeat="piece in row"
+      <div ng-repeat="piece in row track by $index"
          ng-class="{true: 'square-selected', false: 'square'}
             [isSelected($parent.$index, $index)]"
             ng-click="place($parent.$index, $index)"> 
