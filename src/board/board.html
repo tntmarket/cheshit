@@ -1,13 +1,13 @@
 <div class="board">
    <div class="row" ng-repeat="row in squares">
       <div ng-repeat="piece in row track by $index"
-         ng-class="{true: 'square-selected', false: 'square'}
-            [isSelected($parent.$index, $index)]"
-            ng-click="place($parent.$index, $index)"> 
+           ng-class="{true: 'square-selected', false: 'square'}
+                     [isSelected($parent.$index, $index)]"
+            ng-click="place($parent.$index, $index)">
 
          <span style="position:absolute;padding:3px;font-size:10px;">
             {{$parent.$index}}{{$index}}</span>
-         
+
          <div class="piece piece-{{piece}}"
             ng-hide="piece == ' '"
             ng-click="pickup($parent.$index, $index, $event);"></div>
