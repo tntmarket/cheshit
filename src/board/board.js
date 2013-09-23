@@ -1,14 +1,16 @@
 (function() {
    var Board = angular.module('board', []);
 
-   Board.service('hand', function() {
-      this.from = null;
-
-      this.pickup = function(from) {
-         this.from = from;
-      };
-   });
-
+   /**
+    * USAGE:
+    *  <board on-move="moveHandler"
+    *    squares="8x8MatrixOfSquares"
+    *    player="black or white">
+    *
+    *  moveHandler is passed:
+    *    from - [row, file] of piece source
+    *    to - [row, file] of piece destination
+    */
    Board.directive('board', function() {
 
       return {
@@ -17,7 +19,8 @@
          replace: true,
          scope: {
             squares: '=',
-            player: '@'
+            player: '@',
+            onMove: '&'
          },
 
          controller: function($scope) {
@@ -48,13 +51,16 @@
             $scope.pickup = function(row, file, event) {
                if(isOwner(row, file)) {
                   $scope.from = [row, file];
-                  return event.stopPropagation();
+                  event.stopPropagation();
                }
             };
 
             $scope.place = function(row, file) {
                if($scope.from && notAllied(row, file)) {
-                  $scope.$emit('move', $scope.from, [row, file]);
+                  $scope.onMove({
+                     from: $scope.from,
+                     to: [row, file]
+                  });
                   $scope.from = null;
                }
             };
@@ -65,13 +71,8 @@
                }
                return false;
             };
-         },
-
-         link: function(scope, el, attrs, controller) {
-
          }
       };
    });
-
 
 })();

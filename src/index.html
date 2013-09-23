@@ -21,7 +21,7 @@
 </head>
 
 <body ng-controller="Chess" ng-app="cheshit">
-   <board squares="board" player="{{player}}"></board>
+   <board on-move="handleMove(from, to);" squares="board" player="{{player}}"></board>
 </body>
 
 </html>

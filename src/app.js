@@ -18,11 +18,12 @@
 
          $scope.player = 'white';
 
-         $scope.$on('move', function(event, from, to) {
+         $scope.handleMove = function(from, to) {
             var board = $scope.board;
 
             board[to[0]][to[1]] = board[from[0]][from[1]];
             board[from[0]][from[1]] = ' ';
-         });
+            console.log(arguments);
+         }
       }]);
 })();
