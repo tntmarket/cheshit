@@ -3,92 +3,72 @@
 
    module.service('hand', function() {
       this.from = null;
-      this.to = null;
 
       this.pickup = function(from) {
-         if(this.from) {
-            return;
-         }
-
          this.from = from; 
-      };
-
-      this.updateTo = function(to) {
-         this.to = to;
-      };
-
-      this.clear = function() {
-         this.from = null;
-         this.to = null;
       };
    });
    
-   module.directive('square', function(hand) {
-
-      return {
-         restrict: 'E',
-         templateUrl: 'board/square.html',
-         replace: true,
-         scope: {
-           row : '=',
-           file: '=',
-           type: '='
-         },
-
-         link: function(scope, el, attrs, controller) {
-            $(el).find('.piece').draggable({
-               addClasses: false,
-               revert: false,
-               start: function() {
-                  hand.pickup([scope.row, scope.file]);
-               },
-               stop: function() {
-                  var from = hand.from;
-                  var to = hand.to;
-                  hand.clear();
-                  
-                  if(from[0] === to[0] && from[1] === to[1]) {
-                     return;
-                  }
-
-                  scope.$emit('move', from, to);
-               }
-            });
-
-            $(el).droppable({
-               addClasses: false,
-               tolerance: 'pointer',
-               drop: function(event) {
-               },
-               over: function() {
-                  hand.updateTo([scope.row, scope.file]);
-               }
-            });
-         }
-      };
-   });
-
    module.directive('board', function() {
 
       return {
          restrict: 'E',
          templateUrl: 'board/board.html',
          replace: true,
-         scope: {},
-         controller: function($scope) {
+         scope: {
+            squares: '=',
+            player: '@'
+         },
 
+         controller: function($scope) {
+            function color(piece) {
+               if(piece.toUpperCase() === piece) {
+                  return 'white';
+               } else {
+                  return 'black';
+               }
+            }
+
+            function isOwner(row, file) {
+               var piece = $scope.squares[row][file];
+               return piece === ' ' || $scope.player === color(piece);
+            }
+
+            function isEmpty(row, file) {
+               var piece = $scope.squares[row][file];
+               return piece === ' ';
+            }
+
+            function notAllied(row, file) {
+               return isEmpty(row, file) || !isOwner(row, file);
+            }
+
+            $scope.from = null;
+
+            $scope.pickup = function(row, file, event) {
+               if(isOwner(row, file)) {
+                  $scope.from = [row, file];
+                  return event.stopPropagation();
+               }
+            };
+
+            $scope.place = function(row, file) {
+               if($scope.from && notAllied(row, file)) {
+                  $scope.$emit('move', $scope.from, [row, file]);
+                  $scope.from = null;
+               }
+            };
+
+            $scope.isSelected = function(row, file) {
+               if($scope.from && isOwner(row, file)) {
+                  return (row === $scope.from[0] && file === $scope.from[1]);
+               }
+               return false;
+            };
          },
 
          link: function(scope, el, attrs, controller) {
-            $(el).droppable({
-               addClasses: false,
-               tolerance: 'pointer',
-               drop: function(event) {
-               },
-               over: function() {
-                  hand.updateTo([scope.row, scope.file]);
-               }
-            });
+            
          }
       };
    });

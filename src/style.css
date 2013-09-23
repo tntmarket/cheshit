@@ -19,7 +19,9 @@ body {
    height:50px;
 }
 
-.square {
+.square,
+.square-selected
+{
    display: inline-block;
    margin: 0px;
    padding: 0px;
@@ -29,5 +31,9 @@ body {
 
 .board .row:nth-child(even) .square:nth-child(odd),
 .board .row:nth-child(odd) .square:nth-child(even) {
-   background: #ccc;
+   background: #CCC;
+}
+
+.board .row .square-selected {
+   background: #99CCFF;
 }

@@ -10,9 +10,8 @@
 
    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
    <script src="lib/jquery.min.js"></script>
-   <script src="lib/jquery-ui.min.js"></script>
+   <!--<script src="lib/jquery-ui.min.js"></script>-->
    <script src="lib/boot/js/bootstrap.min.js"></script>
-   <script src="rules.js"></script>
    <script src="lib/angular.min.js"></script>
    <script src="board/board.js"></script>
    <script src="lib/angularfire.min.js"></script>
@@ -20,14 +19,7 @@
 </head>
 
 <body ng-controller="Chess">
-   <!--<board></board>-->
-   <div class="board">
-      <div class="row" ng-repeat="row in game.board">
-         <square ng-repeat="piece in row" 
-         type="piece" row="$parent.$index" file="$index">
-         </square>
-      </div>
-   </div>
+   <board squares="board" player="{{player}}"></board>
 </body>
 
 </html>

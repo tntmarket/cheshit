@@ -1,15 +1,17 @@
 <div class="board">
-   <div class="row" ng-repeat="row in game.board">
+   <div class="row" ng-repeat="row in squares">
+      <div ng-repeat="piece in row"
+         ng-class="{true: 'square-selected', false: 'square'}
+            [isSelected($parent.$index, $index)]"
+            ng-click="place($parent.$index, $index)"> 
 
-      <div class="square">
          <span style="position:absolute;padding:3px;font-size:10px;">
-            {{row}}{{file}}</span>
+            {{$parent.$index}}{{$index}}</span>
          
-         <div class="piece piece-{{type}}"
-            ng-hide="type == ' '"></div>
+         <div class="piece piece-{{piece}}"
+            ng-hide="piece == ' '"
+            ng-click="pickup($parent.$index, $index, $event);"></div>
+
       </div>
-      <square ng-repeat="piece in row" 
-      type="piece" row="$parent.$index" file="$index">
-      </square>
    </div>
 </div>
