@@ -1,4 +1,39 @@
-(function() {
+require.config({
+   paths: {
+      'angular': 'lib/angular-latest/build/angular',
+      'firebase': 'lib/firebase-debug',
+      'angularFire': 'lib/angular-fire/angularFire'
+   },
+   map: {
+      '*': {
+         'css': 'lib/require-css/css',
+         'text': 'lib/text/text'
+      }
+   },
+   shim: {
+      'angular': {
+         exports: 'angular'
+      },
+      'firebase': {
+         exports: 'firebase'
+      },
+      'angularFire': {
+         deps: ['firebase', 'angular']
+      }
+   }
+});
+
+require([
+   'css!style',
+
+   'angular',
+   'firebase',
+   'angularFire',
+
+   'chessui/chessui'
+
+], function() {
+
    var App = angular.module('cheshit', ['firebase', 'chessui']);
 
    App.controller('Chess', function($scope, angularFire) {
@@ -25,4 +60,7 @@
          console.log(arguments);
       }
    });
-})();
+
+   angular.bootstrap(document.body, ['cheshit'])
+
+});
