@@ -16,7 +16,7 @@
          </span>
 
          <piece type="{{pieceType}}"
-                ng-click="graspAt(row, file); $event.stopPropagation()">
+                ng-click="graspAt(row, file, $event);">
          <!--             to prevent click on square it came from    -->
          </piece>
 

@@ -48,9 +48,12 @@ define([
             return $scope.player === utils.color($scope.pieceType);
          };
 
-         $scope.graspAt = function(row, file) {
-            $scope.move.inProgress = true;
-            $scope.move.from = [row, file];
+         $scope.graspAt = function(row, file, event) {
+            if($scope.ownedByPlayer()) {
+               $scope.move.inProgress = true;
+               $scope.move.from = [row, file];
+               event.stopPropagation(); // don't drop immediately on your own square!
+            }
          };
 
          $scope.releaseAt = function(row, file) {
