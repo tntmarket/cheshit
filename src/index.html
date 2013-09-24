@@ -5,23 +5,28 @@
    <meta charset="utf-8">
    <title></title>
    <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
-   <link rel="stylesheet" href="style.css">
-   <link rel="stylesheet" href="board/board.css">
 
    <script src="https://cdn.firebase.com/v0/firebase.js"></script>
-   <script src="lib/jquery/jquery.js"></script>
-   <script src="lib/bootstrap/dist/js/bootstrap.js"></script>
-
    <script src="lib/angular-latest/build/angular.js"></script>
    <script src="lib/angular-fire/angularFire.js"></script>
 
-   <script src="board/board.js"></script>
+   <script src="chessui/chessui.js"></script>
+
+      <script src="chessui/board/board.js"></script>
+      <link rel="stylesheet" href="chessui/board/board.css">
+
+      <script src="chessui/piece/piece.js"></script>
+      <link rel="stylesheet" href="chessui/piece/piece.css">
+
    <script src="app.js"></script>
+   <link rel="stylesheet" href="style.css">
 
 </head>
 
 <body ng-controller="Chess" ng-app="cheshit">
-   <board on-move="handleMove(from, to);" squares="board" player="{{player}}"></board>
+   <board on-move="handleMove(from, to);"
+          squares="board"
+          player="{{player}}"></board>
 </body>
 
 </html>

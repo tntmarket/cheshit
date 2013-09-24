@@ -18,7 +18,9 @@
   "dependencies": {
     "bootstrap": "*",
     "angular-latest": "*",
-    "jQuery": "*",
-    "angular-fire": "*"
+    "angular-fire": "*",
+    "requirejs": "*",
+    "require-css": "*",
+    "text": "*"
   }
 }

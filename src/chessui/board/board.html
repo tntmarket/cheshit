@@ -1,0 +1,26 @@
+<div class="board">
+   <div class="row" ng-repeat="row in squares">
+
+      <div ng-repeat="pieceType in row track by $index"
+
+           ng-controller="BoardSquare"
+           ng-init="row = $parent.$parent.$index; file = $parent.$index"
+
+           ng-class="{true: 'square-selected', false: 'square'}
+                     [isGrasped()]"
+
+           ng-click="releaseAt(row, file)">
+
+         <span style="position:absolute;padding:3px;font-size:10px;">
+            {{row}}{{file}}
+         </span>
+
+         <piece type="{{pieceType}}"
+                ng-click="graspAt(row, file); $event.stopPropagation()">
+         <!--             to prevent click on square it came from    -->
+         </piece>
+
+      </div>
+
+   </div>
+</div>

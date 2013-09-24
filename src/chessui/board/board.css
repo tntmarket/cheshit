@@ -1,0 +1,33 @@
+.board {
+  margin: 100px;
+  padding: 0;
+  border: 5px solid black;
+  width:410px;
+  height:410px;
+}
+
+.row {
+  margin: 0;
+  padding: 0;
+  width:400px;
+  height:50px;
+}
+
+.square,
+.square-selected
+{
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  width:50px;
+  height:50px;
+}
+
+.board .row:nth-child(even) .square:nth-child(odd),
+.board .row:nth-child(odd) .square:nth-child(even) {
+  background: #CCC;
+}
+
+.board .row .square-selected {
+  background: #99CCFF;
+}
