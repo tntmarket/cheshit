@@ -1,6 +1,6 @@
 define(function(){
-   function InitUtils(module) {
-      module.service('utils', function() {
+   function InitColorUtils(module) {
+      module.service('ColorUtils', function() {
          this.color = function(pieceType) {
             if(pieceType === ' ') {
                return false;
@@ -9,9 +9,9 @@ define(function(){
             } else {
                return 'black';
             }
-         }
+         };
       });
    }
 
-   return InitUtils;
+   return InitColorUtils;
 });

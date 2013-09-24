@@ -8,7 +8,7 @@ define([
        * USAGE:
        *  <board on-move="moveHandler(from, to)"
        *    squares="8x8MatrixOfSquares"
-       *    player="black or white">
+       *    playingAs="black or white">
        *
        *  moveHandler is passed:
        *    from - [row, file] of piece source
@@ -22,7 +22,7 @@ define([
             replace: true,
             scope: {
                squares: '=',
-               player: '@',
+               playingAs: '@',
                onMove: '&'
             },
 
@@ -35,34 +35,35 @@ define([
          };
       });
 
-      module.controller('BoardSquare', function($scope, utils) {
+      module.controller('BoardSquare', function($scope, ColorUtils) {
+         var move = $scope.move;
 
-         $scope.isGrasped = function() {
-            var move = $scope.move;
+         $scope.holdingThePiece = function() {
             return move.inProgress &&
                move.from[0] === $scope.row &&
                move.from[1] === $scope.file;
          };
 
-         $scope.ownedByPlayer = function() {
-            return $scope.player === utils.color($scope.pieceType);
-         };
+         function iOwnThisPiece() {
+            return $scope.playingAs === ColorUtils.color($scope.pieceType);
+         }
 
          $scope.graspAt = function(row, file, event) {
-            if($scope.ownedByPlayer()) {
-               $scope.move.inProgress = true;
-               $scope.move.from = [row, file];
-               event.stopPropagation(); // don't drop immediately on your own square!
+            if(iOwnThisPiece()) {
+               move.inProgress = true;
+               move.from = [row, file];
+               event.stopPropagation();
+               // don't drop immediately on your own square!
             }
          };
 
          $scope.releaseAt = function(row, file) {
-            if($scope.move.inProgress && !$scope.ownedByPlayer()) {
+            if(move.inProgress && !iOwnThisPiece()) {
                $scope.onMove({
                   from: $scope.move.from,
                   to: [row, file]
                });
-               $scope.move.inProgress = false;
+               move.inProgress = false;
             }
          };
       });

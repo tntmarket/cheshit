@@ -30,11 +30,11 @@ require([
    'firebase',
    'angularFire',
 
-   'chessui/chessui'
+   'chess_ui/chess_ui'
 
 ], function() {
 
-   var App = angular.module('cheshit', ['firebase', 'chessui']);
+   var App = angular.module('cheshit', ['firebase', 'ChessUi']);
 
    App.controller('Chess', function($scope, angularFire) {
       var ref = new Firebase('https://cheshit.firebaseio.com/game/board');
@@ -50,14 +50,13 @@ require([
          [ 'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R' ]
       ]);
 
-      $scope.player = 'white';
+      $scope.whiteOrBlack = 'white';
 
       $scope.handleMove = function(from, to) {
          var board = $scope.board;
 
          board[to[0]][to[1]] = board[from[0]][from[1]];
          board[from[0]][from[1]] = ' ';
-         console.log(arguments);
       }
    });
 

@@ -7,7 +7,7 @@
            ng-init="row = $parent.$parent.$index; file = $parent.$index"
 
            ng-class="{true: 'square-selected', false: 'square'}
-                     [isGrasped()]"
+                     [holdingThePiece()]"
 
            ng-click="releaseAt(row, file)">
 
@@ -17,7 +17,6 @@
 
          <piece type="{{pieceType}}"
                 ng-click="graspAt(row, file, $event);">
-         <!--             to prevent click on square it came from    -->
          </piece>
 
       </div>
