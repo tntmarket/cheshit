@@ -6,7 +6,7 @@ define([
    function InitBoard(module) {
       /**
        * USAGE:
-       *  <board on-move="moveHandler"
+       *  <board on-move="moveHandler(from, to)"
        *    squares="8x8MatrixOfSquares"
        *    player="black or white">
        *
