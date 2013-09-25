@@ -27,30 +27,37 @@ require([
    'css!style',
 
    'angular',
-   'firebase',
-   'angularFire',
 
+   'fire/fire',
    'chess_ui/chess_ui'
 
 ], function() {
 
-   var App = angular.module('cheshit', ['firebase', 'ChessUi']);
+   var App = angular.module('cheshit', ['Fire', 'ChessUi']);
 
-   App.controller('Chess', function($scope, angularFire) {
-      var ref = new Firebase('https://cheshit.firebaseio.com/game/board');
-      angularFire(ref, $scope, 'board');
-      ref.set([
-         [ 'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r' ],
-         [ 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' ],
-         [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ],
-         [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ],
-         [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ],
-         [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ],
-         [ 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P' ],
-         [ 'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R' ]
-      ]);
+   App.controller('Chess', function($scope, Sync, ColorUtils) {
+      var boardRef = Sync($scope, 'board', '/board');
 
-      $scope.whiteOrBlack = 'white';
+      boardRef.once('value', function(squares) {
+         if(!squares.val()) {
+            boardRef.set([
+               [ 'r', 'n', 'b', 'q', 'k', 'b', 'n', 'r' ],
+               [ 'p', 'p', 'p', 'p', 'p', 'p', 'p', 'p' ],
+               [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ],
+               [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ],
+               [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ],
+               [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ],
+               [ 'P', 'P', 'P', 'P', 'P', 'P', 'P', 'P' ],
+               [ 'R', 'N', 'B', 'Q', 'K', 'B', 'N', 'R' ]
+            ]);
+         }
+      });
+
+      $scope.myColor = 'white';
+
+      $scope.enemyColor = function() {
+         return ColorUtils.opposite($scope.myColor);
+      };
 
       $scope.handleMove = function(from, to) {
          var board = $scope.board;

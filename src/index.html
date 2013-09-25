@@ -9,9 +9,15 @@
 </head>
 
 <body ng-controller="Chess">
-   <board on-move="handleMove(from, to);"
+
+   <graveyard color="{{enemyColor()}}"></graveyard>
+
+   <board on-move="handleMove(from, to)"
           squares="board"
-          player="{{player}}"></board>
+          playing-as="{{myColor}}"></board>
+
+   <graveyard color="{{myColor}}"></graveyard>
+
 </body>
 
 </html>
