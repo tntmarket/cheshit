@@ -1,12 +1,13 @@
 {
   "name": "cheshit",
   "version": "0.0.0",
+  "description": "Cray cray chess",
   "authors": [
-    "tntmarker",
+    "tntmarket",
     "buyinganame"
   ],
   "repository": "https://github.com/tntmarket/cheshit",
   "dependencies": {
-    "express": "~3.0.0"
+    "express": "*"
   }
 }

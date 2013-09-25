@@ -1,31 +1,23 @@
 <!DOCTYPE html>
-<html lang="en" ng-app="cheshit">
+<html lang="en">
 <head>
    <meta charset="utf-8">
-   <title></title>
-   <link rel="stylesheet" href="lib/boot/css/bootstrap.min.css">
-   <link rel="stylesheet" href="lib/boot/css/bootstrap-theme.min.css">
-   <link rel="stylesheet" href="style.css">
-   <link rel="stylesheet" href="chess.css">
+   <title>Cheshit</title>
+   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
 
-   <script src="https://cdn.firebase.com/v0/firebase.js"></script>
-   <script src="lib/jquery.min.js"></script>
-   <script src="lib/jquery-ui.min.js"></script>
-   <script src="lib/boot/js/bootstrap.min.js"></script>
-   <script src="lib/angular.min.js"></script>
-   <script src="board/board.js"></script>
-   <script src="lib/angularfire.min.js"></script>
-   <script src="app.js"></script>
+   <script data-main="app.js" src="lib/requirejs/require.js"></script>
 </head>
 
 <body ng-controller="Chess">
-   <div class="board">
-      <div class="row" ng-repeat="row in game.board">
-         <square ng-repeat="piece in row" 
-         piece="{{piece}}" row="{{$parent.$index}}" file="{{$index}}">
-         </square>
-      </div>
-   </div>
+
+   <graveyard color="{{enemyColor()}}"></graveyard>
+
+   <board on-move="handleMove(from, to)"
+          squares="board"
+          playing-as="{{myColor}}"></board>
+
+   <graveyard color="{{myColor}}"></graveyard>
+
 </body>
 
 </html>

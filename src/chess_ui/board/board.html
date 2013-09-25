@@ -1,0 +1,33 @@
+<div class="board">
+   <div class="row" ng-repeat="row in squares">
+
+      <div ng-repeat="pieceType in row track by $index"
+
+           ng-controller="BoardSquare"
+           ng-init="row = $parent.$parent.$index; file = $parent.$index"
+
+           ng-class="{
+              'square': !iHoldThePiece(),
+              'square-selected': iHoldThePiece(),
+              'move-cursor': canMoveTo()
+           }"
+
+           ng-click="releaseAt(row, file)">
+
+         <span class="coordinate-label" ng-class="">
+            {{row}}{{file}}
+         </span>
+
+         <piece type="{{pieceType}}"
+                ng-click="holdOrDropPiece(row, file, $event)"
+                ng-class="{
+                   'move-cursor':  iHoldThePiece() && iOwnThisPiece(),
+                   'hand-cursor': !iHoldThePiece() && iOwnThisPiece(),
+                   'crosshair-cursor': canMoveTo()
+                }">
+         </piece>
+
+      </div>
+
+   </div>
+</div>
