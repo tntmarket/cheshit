@@ -4,3 +4,14 @@ body {
   -ms-user-select: none;
 }
 
+.hand-cursor {
+  cursor: pointer;
+}
+
+.move-cursor {
+  cursor: move;
+}
+
+.crosshair-cursor {
+  cursor: crosshair;
+}

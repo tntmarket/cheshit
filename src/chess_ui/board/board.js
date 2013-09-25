@@ -38,18 +38,28 @@ define([
       module.controller('BoardSquare', function($scope, ColorUtils) {
          var move = $scope.move;
 
-         $scope.holdingThePiece = function() {
-            return move.inProgress &&
-               move.from[0] === $scope.row &&
-               move.from[1] === $scope.file;
-         };
-
          function iOwnThisPiece() {
             return $scope.playingAs === ColorUtils.color($scope.pieceType);
          }
 
-         $scope.graspAt = function(row, file, event) {
-            if(iOwnThisPiece()) {
+         function iHoldThePiece() {
+            return move.inProgress &&
+               move.from[0] === $scope.row &&
+               move.from[1] === $scope.file;
+         }
+
+         $scope.canMoveTo = function() {
+            return move.inProgress && !iOwnThisPiece();
+         };
+
+         $scope.iOwnThisPiece = iOwnThisPiece;
+
+         $scope.iHoldThePiece = iHoldThePiece;
+
+         $scope.holdOrDropPiece = function(row, file, event) {
+            if (iHoldThePiece()) {
+               move.inProgress = false;
+            } else if(iOwnThisPiece()) {
                move.inProgress = true;
                move.from = [row, file];
                event.stopPropagation();

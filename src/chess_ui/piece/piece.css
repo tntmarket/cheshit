@@ -6,6 +6,7 @@
   position: absolute;
 }
 
+/* Chess Icon Unicode */
 .piece-K:before {
   content: "\2654"
 }

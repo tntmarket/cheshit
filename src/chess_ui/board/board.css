@@ -1,7 +1,7 @@
 .board {
   margin: 100px;
   padding: 0;
-  border: 5px solid black;
+  border: 5px solid #444;
   width:410px;
   height:410px;
 }
@@ -14,8 +14,7 @@
 }
 
 .square,
-.square-selected
-{
+.square-selected {
   display: inline-block;
   margin: 0;
   padding: 0;
@@ -30,4 +29,10 @@
 
 .board .row .square-selected {
   background: #99CCFF;
+}
+
+.coordinate-label {
+  position: absolute;
+  padding: 3px;
+  font-size: 10px;
 }
