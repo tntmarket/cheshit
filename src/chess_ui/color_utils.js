@@ -1,6 +1,7 @@
 define(function(){
    function InitColorUtils(module) {
       module.service('ColorUtils', function() {
+
          this.color = function(pieceType) {
             if(pieceType === ' ') {
                return false;
@@ -10,6 +11,17 @@ define(function(){
                return 'black';
             }
          };
+
+         this.opposite = function(color) {
+            if(color === 'white') {
+               return 'black';
+            } else if(color === 'black') {
+               return 'white';
+            } else {
+               throw (color + "isn't a color, noob");
+            }
+         };
+
       });
    }
 
