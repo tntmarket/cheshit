@@ -2,7 +2,8 @@ require.config({
    paths: {
       'angular': 'lib/angular-latest/build/angular',
       'firebase': 'lib/firebase-debug',
-      'angularFire': 'lib/angular-fire/angularFire'
+      'angularFire': 'lib/angular-fire/angularFire',
+      'fire': 'fire/fire'
    },
    map: {
       '*': {
@@ -28,7 +29,7 @@ require([
 
    'angular',
 
-   'fire/fire',
+   'fire',
    'chess_ui/chess_ui'
 
 ], function() {
@@ -64,9 +65,9 @@ require([
 
          board[to[0]][to[1]] = board[from[0]][from[1]];
          board[from[0]][from[1]] = ' ';
-      }
+      };
    });
 
-   angular.bootstrap(document.body, ['cheshit'])
+   angular.bootstrap(document.body, ['cheshit']);
 
 });
