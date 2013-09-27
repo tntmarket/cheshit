@@ -1,24 +1,24 @@
 require.config({
    paths: {
-      'angular': 'lib/angular-latest/build/angular',
-      'firebase': 'lib/firebase-debug',
-      'angularFire': 'lib/angular-fire/angularFire',
-      'fire': 'fire/fire'
+      angular: 'lib/angular',
+      firebase: 'lib/firebase-debug',
+      angularFire: 'lib/angular-fire',
+      fire: 'fire/fire',
+      text: 'lib/text'
    },
    map: {
       '*': {
-         'css': 'lib/require-css/css',
-         'text': 'lib/text/text'
+         css: 'lib/require-css/css'
       }
    },
    shim: {
-      'angular': {
+      angular: {
          exports: 'angular'
       },
-      'firebase': {
+      firebase: {
          exports: 'firebase'
       },
-      'angularFire': {
+      angularFire: {
          deps: ['firebase', 'angular']
       }
    }

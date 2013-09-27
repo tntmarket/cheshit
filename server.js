@@ -9,6 +9,7 @@ app.get('/', function(req, res){
 
 app.configure(function() {
    app.use(express.static(__dirname + '/src'));
+   app.use('lib', express.static(__dirname + '/lib'));
 });
 
 app.listen(process.env.VCAP_APP_PORT || 8080);

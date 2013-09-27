@@ -3,16 +3,16 @@
 <head>
    <meta charset="utf-8">
    <title>Cheshit</title>
-   <link rel="stylesheet" href="lib/bootstrap/dist/css/bootstrap.css">
+   <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.css">
 
-   <script data-main="main.js" src="lib/requirejs/require.js"></script>
+   <script data-main="main.js" src="lib/require.js"></script>
 </head>
 
 <body ng-controller="Chess">
 
    <graveyard color="{{enemyColor()}}"></graveyard>
 
-   <board on-move="handleMove(from, to)"
+   <board on-move="handleMove(from, to);"
           squares="board"
           playing-as="{{myColor}}"></board>
 

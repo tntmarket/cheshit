@@ -1,13 +1,25 @@
 {
-  "name": "cheshit",
-  "version": "0.0.0",
-  "description": "Cray cray chess",
-  "authors": [
-    "tntmarket",
-    "buyinganame"
-  ],
-  "repository": "https://github.com/tntmarket/cheshit",
-  "dependencies": {
-    "express": "*"
-  }
+   "name": "cheshit",
+   "version": "0.0.0",
+   "description": "Cray cray chess",
+   "authors": [
+      "tntmarket",
+      "buyinganame"
+   ],
+   "repository": "https://github.com/tntmarket/cheshit",
+   "dependencies": {
+      "express": "latest"
+   },
+   "devDependencies": {
+      "bower": "latest",
+      "grunt": "latest",
+      "grunt-contrib-clean": "latest",
+      "grunt-contrib-requirejs": "latest",
+      "karma": "latest",
+      "karma-mocha": "latest",
+      "karma-chai": "latest",
+      "karma-chai-plugins": "latest",
+      "karma-coverage": "latest",
+      "karma-sinon": "latest"
+   }
 }
