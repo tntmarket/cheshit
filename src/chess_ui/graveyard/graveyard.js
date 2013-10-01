@@ -1,27 +1,26 @@
 define([
+   'chess_ui/chess_ui',
+
    'text!./graveyard.html',
    'css!./graveyard'
-], function (graveyardTemplate) {
+], function (ChessUi, graveyardTemplate) {
 
-   function Init(module) {
-      module.directive('graveyard', function () {
-         return {
-            restrict: 'E',
-            template: graveyardTemplate,
-            replace: true,
-            scope: {
-               color: '@'
-            },
-            link: function (scope, el, attrs) {
+   ChessUi.directive('graveyard', function () {
+      return {
+         restrict: 'E',
+         template: graveyardTemplate,
+         replace: true,
+         scope: {
+            color: '@'
+         },
+         link: function (scope, el, attrs) {
 
-            },
-            controller: function () {
+         },
+         controller: function () {
 
-            }
-         };
-      });
-   }
+         }
+      };
+   });
 
-   return Init;
 });
 

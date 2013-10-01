@@ -1,13 +1,12 @@
-define([
-   './color_utils',
-   './board/board',
-   './piece/piece',
-   './graveyard/graveyard'
-], function(InitColorUtils, InitBoard, InitPiece, InitGraveyard) {
-   var ChessUi = angular.module('ChessUi', []);
+define(function() {
 
-   InitColorUtils(ChessUi);
-   InitBoard(ChessUi);
-   InitPiece(ChessUi);
-   InitGraveyard(ChessUi);
+   try {
+      return angular.module('ChessUi');
+   } catch (error) {
+      if(error.message === 'No module: ChessUi') {
+         return angular.module('ChessUi', []);
+      }
+      throw error;
+   }
+
 });

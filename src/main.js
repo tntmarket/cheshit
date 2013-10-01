@@ -30,7 +30,10 @@ require([
    'angular',
 
    'fire',
-   'chess_ui/chess_ui'
+
+   'chess_ui/board/board',
+   'chess_ui/graveyard/graveyard',
+   'chess_ui/color_utils'
 
 ], function() {
 
