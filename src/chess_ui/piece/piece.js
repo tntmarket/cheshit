@@ -5,7 +5,6 @@ define([
 ], function(ChessUi) {
 
    ChessUi.directive('piece', function() {
-      //noinspection JSUnusedGlobalSymbols
       return {
          restrict: 'E',
          template:

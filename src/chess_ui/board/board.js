@@ -6,7 +6,9 @@ define([
 
    'chess_ui/color_utils',
    'chess_ui/piece/piece'
-], function(ChessUi, boardTemplate) {
+],
+
+function(ChessUi, boardTemplate) {
 
    /**
     * USAGE:
@@ -27,56 +29,89 @@ define([
             squares: '=',
             playingAs: '@',
             onMove: '&'
-         },
-
-         link: function(scope) {
-            scope.move = {
-               inProgress: false,
-               from: [0,0]
-            };
          }
       };
    });
 
-   ChessUi.controller('BoardSquare', function($scope, ColorUtils) {
-      var move = $scope.move;
+   ChessUi.service('BoardMove', function() {
+      var inProgress = false;
+      var from = [0,0];
+
+      this.start = function(row, file) {
+         inProgress = true;
+         from = [row, file];
+      };
+
+      this.startedFrom = function(row, file) {
+         return inProgress &&
+            from[0] === row &&
+            from[1] === file;
+      };
+
+      this.cancel = function() {
+         inProgress = false;
+      };
+
+      this.inProgress = function() {
+         return inProgress;
+      };
+
+      this.end = function(row, file) {
+         inProgress = false;
+         return {
+            from: from,
+            to: [row, file]
+         };
+      };
+   });
+
+   ChessUi.controller('BoardSquareCtrl', function($scope, ColorUtils, BoardMove) {
+      var row, file;
+
+      $scope.setRowAndFile = function(_row, _file) {
+         row = _row;
+         file = _file;
+      };
 
       function iOwnThisPiece() {
          return $scope.playingAs === ColorUtils.colorOf($scope.pieceType);
       }
 
-      function iHoldThePiece() {
-         return move.inProgress &&
-            move.from[0] === $scope.row &&
-            move.from[1] === $scope.file;
+      function iHoldThisPiece() {
+         return BoardMove.startedFrom(row, file);
       }
 
-      $scope.canMoveTo = function() {
-         return move.inProgress && !iOwnThisPiece();
+      function canMoveHere() {
+         return BoardMove.inProgress() && !iOwnThisPiece();
+      }
+
+      $scope.squareClass = function() {
+         return [
+            iHoldThisPiece() ? 'square-selected' : 'square',
+            canMoveHere() ? 'fist-cursor' : ''
+         ];
       };
 
-      $scope.iOwnThisPiece = iOwnThisPiece;
-
-      $scope.iHoldThePiece = iHoldThePiece;
-
-      $scope.holdOrDropPiece = function(row, file, event) {
-         if (iHoldThePiece()) {
-            move.inProgress = false;
+      $scope.pieceClass = function() {
+         if(canMoveHere()) {
+            return 'crosshair-cursor';
          } else if(iOwnThisPiece()) {
-            move.inProgress = true;
-            move.from = [row, file];
-            event.stopPropagation();
-            // don't drop immediately on your own square!
+            if(iHoldThisPiece()) {
+               return 'fist-cursor';
+            } else {
+               return 'finger-cursor';
+            }
          }
+         return '';
       };
 
-      $scope.releaseAt = function(row, file) {
-         if(move.inProgress && !iOwnThisPiece()) {
-            $scope.onMove({
-               from: $scope.move.from,
-               to: [row, file]
-            });
-            move.inProgress = false;
+      $scope.startOrEndMove = function() {
+         if (iHoldThisPiece()) {
+            BoardMove.cancel();
+         } else if(iOwnThisPiece()) {
+            BoardMove.start(row, file);
+         } else if(canMoveHere()) {
+            $scope.onMove(BoardMove.end(row, file));
          }
       };
    });

@@ -1,33 +1,17 @@
 <div class="board">
    <div class="row" ng-repeat="row in squares">
-
       <div ng-repeat="pieceType in row track by $index"
+              ng-controller="BoardSquareCtrl"
+                 ng-init="setRowAndFile($parent.$parent.$index, $parent.$index)"
 
-           ng-controller="BoardSquare"
-           ng-init="row = $parent.$parent.$index; file = $parent.$index"
+                 ng-class="squareClass()"
+                 ng-click="startOrEndMove()">
 
-           ng-class="{
-              'square': !iHoldThePiece(),
-              'square-selected': iHoldThePiece(),
-              'move-cursor': canMoveTo()
-           }"
-
-           ng-click="releaseAt(row, file)">
-
-         <span class="coordinate-label" ng-class="">
-            {{row}}{{file}}
+         <span class="coordinate-label">
+            {{$parent.$parent.$index}}{{$parent.$index}}
          </span>
-
-         <piece type="{{pieceType}}"
-                ng-click="holdOrDropPiece(row, file, $event)"
-                ng-class="{
-                   'move-cursor':  iHoldThePiece() && iOwnThisPiece(),
-                   'hand-cursor': !iHoldThePiece() && iOwnThisPiece(),
-                   'crosshair-cursor': canMoveTo()
-                }">
-         </piece>
+         <piece type="{{pieceType}}" ng-class="pieceClass()"></piece>
 
       </div>
-
    </div>
 </div>

@@ -4,13 +4,18 @@
 module.exports = function(config) {
    config.set({
       preprocessors: {
+         // prevents html2js from stopping text! from loading .html files
          '**/*.html': []
       },
 
       basePath: 'src/',
 
       // frameworks to use
-      frameworks: ['requirejs', 'mocha', 'chai', 'chai-as-promised'],
+      frameworks: [
+         'requirejs',
+         'mocha',
+         'sinon-chai'
+      ],
 
 
       // list of files / patterns to load in the browser
@@ -40,11 +45,11 @@ module.exports = function(config) {
 
       // level of logging
       // possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-      logLevel: config.LOG_DEBUG,
+      logLevel: config.LOG_INFO,
 
 
       // enable / disable watching file and executing tests whenever any file changes
-      autoWatch: true,
+      autoWatch: false,
 
 
       // Start these browsers, currently available:

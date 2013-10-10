@@ -21,7 +21,7 @@ function(ChessUi){
          } else if(color === 'black') {
             return 'white';
          } else {
-            throw (color + "isn't a color, noob");
+            throw (color + " isn't a color, noob");
          }
       };
 

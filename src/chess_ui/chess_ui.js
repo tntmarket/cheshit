@@ -1,4 +1,7 @@
-define(function() {
+define([
+   'angular'
+],
+function() {
 
    try {
       return angular.module('ChessUi');

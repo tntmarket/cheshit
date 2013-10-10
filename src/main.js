@@ -34,7 +34,6 @@ require([
    'chess_ui/board/board',
    'chess_ui/graveyard/graveyard',
    'chess_ui/color_utils'
-
 ], function() {
 
    var App = angular.module('cheshit', ['Fire', 'ChessUi']);

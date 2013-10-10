@@ -4,11 +4,11 @@ body {
   -ms-user-select: none;
 }
 
-.hand-cursor {
+.finger-cursor {
   cursor: pointer;
 }
 
-.move-cursor {
+.fist-cursor {
   cursor: move;
 }
 

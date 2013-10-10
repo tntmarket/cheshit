@@ -20,6 +20,7 @@
       "karma-chai": "latest",
       "karma-chai-plugins": "latest",
       "karma-coverage": "latest",
-      "karma-sinon": "latest"
+      "karma-sinon": "latest",
+      "karma-sinon-chai": "latest"
    }
 }
